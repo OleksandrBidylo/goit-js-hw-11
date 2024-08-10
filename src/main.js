@@ -3,6 +3,7 @@ import { renderGallery, renderError } from './js/render-functions.js';
 
 const searchForm = document.querySelector('#search-form');
 const galleryContainer = document.querySelector('.gallery');
+const loader = document.querySelector('#loader');
 
 searchForm.addEventListener('submit', async event => {
   event.preventDefault();
@@ -15,6 +16,7 @@ searchForm.addEventListener('submit', async event => {
   }
 
   galleryContainer.innerHTML = '';
+  loader.style.display = 'block';
 
   try {
     const data = await fetchImages(query);
@@ -28,5 +30,7 @@ searchForm.addEventListener('submit', async event => {
     }
   } catch (error) {
     renderError('Failed to fetch images. Please try again later.');
+  } finally {
+    loader.style.display = 'none';
   }
 });
